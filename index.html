@@ -4,162 +4,374 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kejal Ranka — Data & AI Engineer</title>
-    <meta name="description" content="I build production AI-powered data products and analytics infrastructure. Currently at Amazon, shipping NLP pipelines that classify 18K records daily and analytics platforms serving 800+ users.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <meta name="description" content="I build AI-powered data products that turn chaos into clarity. Production NLP pipelines, analytics architecture, and systems that improve themselves.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #0f172a;
-            --accent: #2563eb;
-            --accent-soft: #dbeafe;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.15);
             --text: #1e293b;
             --text-muted: #64748b;
-            --bg: #ffffff;
-            --surface: #f8fafc;
+            --text-faint: #94a3b8;
+            --bg: #fafafa;
+            --surface: #ffffff;
             --border: #e2e8f0;
-            --radius: 12px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
 
-        .page { max-width: 720px; margin: 0 auto; padding: 80px 24px; }
+        /* Animated mesh gradient hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+        }
 
-        /* Header */
-        header { margin-bottom: 64px; }
-        header h1 { font-size: 28px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
-        header .role { font-size: 15px; color: var(--text-muted); margin-bottom: 20px; }
-        header .intro { font-size: 16px; line-height: 1.8; color: var(--text); }
-        header .intro strong { color: var(--primary); }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 40%),
+                        radial-gradient(ellipse at 50% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
 
-        .links { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
-        .links a { font-size: 14px; color: var(--accent); text-decoration: none; font-weight: 500; }
-        .links a:hover { text-decoration: underline; }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(2%, -2%) rotate(1deg); }
+            66% { transform: translate(-1%, 1%) rotate(-1deg); }
+        }
 
-        /* Sections */
-        section { margin-bottom: 64px; }
-        section > h2 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 24px; }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 40px 24px;
+            max-width: 700px;
+        }
 
-        /* Case Study Cards */
-        .case-study { border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 16px; transition: all 0.15s; text-decoration: none; display: block; color: inherit; }
-        .case-study:hover { border-color: var(--accent); background: var(--surface); }
-        .case-study .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent); margin-bottom: 8px; }
-        .case-study h3 { font-size: 17px; font-weight: 600; color: var(--primary); margin-bottom: 8px; }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+
+        .hero .typed-line {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 32px;
+            font-weight: 300;
+            min-height: 28px;
+        }
+
+        .hero .typed-line span {
+            border-right: 2px solid var(--accent);
+            padding-right: 4px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 0%, 100% { border-color: var(--accent); } 50% { border-color: transparent; } }
+
+        .hero .intro {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .hero-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .hero-links a {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .hero-links .primary { background: var(--accent); color: white; }
+        .hero-links .primary:hover { background: #4f46e5; transform: translateY(-1px); }
+        .hero-links .ghost { border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); }
+        .hero-links .ghost:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+        /* Main content */
+        .page { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+        /* Numbers strip */
+        .numbers {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: -48px auto 80px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        }
+        .numbers .n {
+            background: var(--surface);
+            padding: 24px 16px;
+            text-align: center;
+        }
+        .numbers .n .val {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            font-variant-numeric: tabular-nums;
+        }
+        .numbers .n .desc { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Section */
+        section { margin-bottom: 80px; }
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        section > h2 { font-size: 28px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        section > .desc { font-size: 15px; color: var(--text-muted); margin-bottom: 32px; line-height: 1.6; }
+
+        /* Case study cards */
+        .case-study {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .case-study::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .case-study:hover { border-color: var(--accent); transform: translateX(4px); box-shadow: 0 4px 16px var(--accent-glow); }
+        .case-study:hover::before { opacity: 1; }
+        .case-study .tag { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .case-study h3 { font-size: 18px; font-weight: 600; color: var(--primary); margin-bottom: 8px; }
         .case-study p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-        .case-study .outcome { margin-top: 12px; font-size: 13px; font-weight: 500; color: var(--primary); }
+        .case-study .result { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 12px; font-weight: 600; color: var(--primary); background: var(--bg); padding: 6px 12px; border-radius: 20px; }
+        .case-study .result::before { content: '→'; color: var(--accent); }
 
-        /* Personal section placeholder */
-        .coming-soon { border: 1px dashed var(--border); border-radius: var(--radius); padding: 28px; text-align: center; color: var(--text-muted); font-size: 14px; }
+        /* Personal/coming soon */
+        .coming-soon {
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+        }
+        .coming-soon .icon { font-size: 28px; margin-bottom: 8px; }
+        .coming-soon p { font-size: 14px; color: var(--text-muted); }
 
-        /* What I Do */
-        .what-i-do { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .what-i-do .item { background: var(--surface); border-radius: 8px; padding: 16px; }
-        .what-i-do .item h4 { font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
-        .what-i-do .item p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+        /* Skills */
+        .skills-container { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .skill-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            transition: border-color 0.2s;
+        }
+        .skill-card:hover { border-color: var(--accent); }
+        .skill-card h4 { font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 8px; }
+        .skill-card p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+        .skill-card .primary-tech { font-size: 11px; font-weight: 600; color: var(--accent); margin-top: 8px; }
 
         /* Footer */
-        footer { border-top: 1px solid var(--border); padding-top: 32px; margin-top: 64px; }
-        footer p { font-size: 13px; color: var(--text-muted); }
-        footer .contact-grid { display: flex; gap: 24px; margin-top: 12px; flex-wrap: wrap; }
-        footer .contact-grid a { font-size: 13px; color: var(--accent); text-decoration: none; }
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 0;
+            text-align: center;
+        }
+        footer h3 { font-size: 20px; font-weight: 600; color: var(--primary); margin-bottom: 8px; }
+        footer p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+        footer .links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        footer .links a { font-size: 13px; color: var(--accent); text-decoration: none; padding: 8px 16px; border: 1px solid var(--border); border-radius: 6px; transition: all 0.2s; }
+        footer .links a:hover { border-color: var(--accent); background: var(--accent-glow); }
+        footer .copy { margin-top: 32px; font-size: 12px; color: var(--text-faint); }
 
         @media (max-width: 600px) {
-            .page { padding: 48px 20px; }
-            .what-i-do { grid-template-columns: 1fr; }
-            header h1 { font-size: 24px; }
+            .hero h1 { font-size: 36px; }
+            .numbers { grid-template-columns: repeat(2, 1fr); margin-top: -32px; }
+            .skills-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<div class="page">
-
-    <header>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
         <h1>Kejal Ranka</h1>
-        <p class="role">Senior Data & AI Engineer · Amazon · Hyderabad</p>
+        <div class="typed-line"><span id="typed"></span></div>
         <p class="intro">
-            I build <strong>production AI-powered data products and analytics infrastructure</strong> that drive decisions worth tens of millions. My work sits at the intersection of data engineering, machine learning, and business strategy — I don't just report numbers, I build the systems that generate them.
+            I turn messy, unstructured data into systems that make decisions.<br>
+            Not dashboards. Not reports. <strong style="color: rgba(255,255,255,0.9)">Systems that think.</strong>
         </p>
-        <p class="intro" style="margin-top: 12px;">
-            Currently at Amazon, I own EU-wide analytics for marketplace programs serving 800+ users. My most interesting work: a self-improving NLP pipeline that classifies 18,000 seller anecdotes daily using RAG + few-shot learning, and an architecture redesign that turned months of onboarding into weeks.
-        </p>
-        <div class="links">
-            <a href="assets/Kejal_Ranka_Resume.pdf" target="_blank">Resume ↗</a>
-            <a href="https://www.linkedin.com/in/kejal-ranka" target="_blank">LinkedIn ↗</a>
-            <a href="mailto:rankakejal.600@gmail.com">Email ↗</a>
+        <div class="hero-links">
+            <a href="#work" class="primary">See my work ↓</a>
+            <a href="assets/Kejal_Ranka_Resume.pdf" class="ghost" target="_blank">Resume</a>
+            <a href="https://www.linkedin.com/in/kejal-ranka" class="ghost" target="_blank">LinkedIn</a>
         </div>
-    </header>
+    </div>
+    <div class="scroll-hint">scroll ↓</div>
+</section>
 
-    <!-- Professional Case Studies -->
-    <section>
-        <h2>Case Studies — Professional</h2>
+<!-- NUMBERS -->
+<div class="page">
+    <div class="numbers">
+        <div class="n"><div class="val">$73M</div><div class="desc">Cost Optimization</div></div>
+        <div class="n"><div class="val">18K/day</div><div class="desc">AI-Classified Records</div></div>
+        <div class="n"><div class="val">91%</div><div class="desc">Classification Accuracy</div></div>
+        <div class="n"><div class="val">800+</div><div class="desc">Platform Users</div></div>
+    </div>
+
+    <!-- CASE STUDIES -->
+    <section id="work">
+        <div class="section-label">Selected Work</div>
+        <h2>Things I've Built</h2>
+        <p class="desc">Production systems, not prototypes. Each one runs daily, serves real users, and moved real numbers.</p>
 
         <a href="projects/professional/nlp-pipeline.html" class="case-study">
-            <div class="label">AI / ML · Production System</div>
-            <h3>Building a Self-Improving NLP Classification Pipeline</h3>
-            <p>How I designed an end-to-end system that classifies 18,000+ unstructured records daily using LLM inference + RAG + few-shot learning — with a feedback loop that improves accuracy without human intervention.</p>
-            <div class="outcome">91% accuracy · 18K records/day · Self-improving via auto-harvested gold set</div>
+            <div class="tag">AI · Production Pipeline</div>
+            <h3>A Pipeline That Teaches Itself</h3>
+            <p>18,000 unstructured text records land every day. My system classifies them into 15 categories with sentiment — and gets better each run without human labeling. Built with RAG, few-shot learning, and an auto-harvesting gold set.</p>
+            <div class="result">91% accuracy, zero manual intervention, self-improving</div>
         </a>
 
         <a href="projects/professional/architecture-redesign.html" class="case-study">
-            <div class="label">System Design · Data Engineering</div>
-            <h3>From Monolith to Modules: Redesigning a Data Architecture</h3>
-            <p>Why I ripped apart 14+ copy-paste pipelines and rebuilt them as a modular framework — reducing onboarding from months to weeks and enabling analysis that was previously impossible.</p>
-            <div class="outcome">14+ pipelines unified · Months → Weeks onboarding · Zero-downtime migration</div>
+            <div class="tag">System Design · Architecture</div>
+            <h3>Killing a Monolith (Without Breaking Production)</h3>
+            <p>Inherited 14+ copy-paste pipelines. Redesigned them into a modular framework — zero downtime, caught 3 bugs in the "working" old code during migration, and turned months of onboarding into weeks.</p>
+            <div class="result">14 pipelines → 4 modules, months → weeks onboarding</div>
         </a>
 
         <a href="projects/professional/bias-discovery.html" class="case-study">
-            <div class="label">Analytics · Investigation</div>
-            <h3>The $5M Bug Nobody Knew Existed</h3>
-            <p>How a lead-time assumption buried in a calculation silently made a program look ineffective — stalling expansion for months. The investigation, the fix, and the framework I built to prevent it happening again.</p>
-            <div class="outcome">$5M+ unblocked · Methodology adopted across 5 teams · Novel "Improvement Index" metric</div>
+            <div class="tag">Analytics · Investigation</div>
+            <h3>The $5M Bug That Didn't Throw an Error</h3>
+            <p>A metric said a program wasn't working. Operators disagreed. I trusted the operators, investigated the measurement, and found a lead-time assumption silently producing wrong answers for months.</p>
+            <div class="result">$5M+ unblocked, methodology adopted across 5 teams</div>
         </a>
     </section>
 
-    <!-- Personal Projects -->
+    <!-- PERSONAL -->
     <section>
-        <h2>Case Studies — Personal & Competitions</h2>
+        <div class="section-label">Side Projects</div>
+        <h2>Beyond Work</h2>
 
         <div class="coming-soon">
-            <p style="font-size: 16px; margin-bottom: 8px;">🚧 Coming soon</p>
-            <p>Personal projects and competition entries will live here.<br>
-            Next up: VIZCON 2025 sustainability analytics (3rd place EMEA), open-source contributions.</p>
+            <div class="icon">🧪</div>
+            <p><strong>Coming soon</strong> — Competition entries, open-source experiments, and AI explorations.<br>
+            Next: VIZCON 2025 sustainability analytics (3rd place EMEA).</p>
         </div>
     </section>
 
-    <!-- What I Do -->
+    <!-- SKILLS -->
     <section>
+        <div class="section-label">Toolkit</div>
         <h2>What I Work With</h2>
-        <div class="what-i-do">
-            <div class="item">
-                <h4>AI/ML Systems</h4>
-                <p>LLM pipelines, RAG, vector embeddings, few-shot learning, sentiment classification, SageMaker, Bedrock</p>
+        <p class="desc">Data engineering foundation. AI as a force multiplier. Not the other way around.</p>
+
+        <div class="skills-container">
+            <div class="skill-card">
+                <h4>Data & SQL</h4>
+                <p>Redshift at billion-row scale. Window functions, CTEs, partitioning, query optimization. This is where I live.</p>
+                <div class="primary-tech">SQL · Redshift · Data Modeling</div>
             </div>
-            <div class="item">
-                <h4>Data Engineering</h4>
-                <p>Redshift at scale, ETL architecture, modular pipelines, event-driven systems, data quality SLAs</p>
+            <div class="skill-card">
+                <h4>AI as a Tool</h4>
+                <p>I don't train models. I use LLMs to solve classification, enrichment, and summarization problems inside data pipelines.</p>
+                <div class="primary-tech">Bedrock · RAG · Embeddings · Prompting</div>
             </div>
-            <div class="item">
-                <h4>Cloud Infrastructure</h4>
-                <p>AWS (Lambda, S3, Glue, Athena, DynamoDB, SageMaker), serverless, event-driven</p>
+            <div class="skill-card">
+                <h4>Pipeline Architecture</h4>
+                <p>Event-driven ETL. Modular design. Systems that run themselves and fail gracefully when they don't.</p>
+                <div class="primary-tech">Lambda · SageMaker · S3 · Glue</div>
             </div>
-            <div class="item">
-                <h4>Analytics & Visualization</h4>
-                <p>Advanced SQL, Tableau, QuickSight, Python (pandas), metric frameworks, executive reporting</p>
+            <div class="skill-card">
+                <h4>Visualization & Products</h4>
+                <p>QuickSight at enterprise scale. Tableau certified. Interactive HTML dashboards. I build things people actually use.</p>
+                <div class="primary-tech">QuickSight · Tableau · Python · HTML/JS</div>
             </div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer>
-        <p>Open to Senior BIE / Analytics Engineer / Data & AI Engineer roles.</p>
-        <div class="contact-grid">
-            <a href="mailto:rankakejal.600@gmail.com">rankakejal.600@gmail.com</a>
+        <h3>Let's talk</h3>
+        <p>Open to Senior Data & AI roles where analytics meets product thinking.</p>
+        <div class="links">
+            <a href="mailto:rankakejal.600@gmail.com">Email</a>
             <a href="https://www.linkedin.com/in/kejal-ranka" target="_blank">LinkedIn</a>
             <a href="assets/Kejal_Ranka_Resume.pdf" target="_blank">Resume (PDF)</a>
         </div>
-        <p style="margin-top: 24px; font-size: 12px; color: #94a3b8;">© 2026 Kejal Ranka</p>
+        <p class="copy">© 2026 Kejal Ranka. Built with intention.</p>
     </footer>
-
 </div>
+
+<!-- Typing animation -->
+<script>
+const phrases = [
+    "I build AI-powered data products.",
+    "I design systems that improve themselves.",
+    "I find the bugs that don't throw errors.",
+    "I turn unstructured chaos into structured clarity."
+];
+let phraseIdx = 0, charIdx = 0, deleting = false;
+const el = document.getElementById('typed');
+
+function type() {
+    const current = phrases[phraseIdx];
+    if (!deleting) {
+        el.textContent = current.substring(0, charIdx++);
+        if (charIdx > current.length) { deleting = true; setTimeout(type, 2000); return; }
+        setTimeout(type, 50);
+    } else {
+        el.textContent = current.substring(0, charIdx--);
+        if (charIdx < 0) { deleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; setTimeout(type, 500); return; }
+        setTimeout(type, 30);
+    }
+}
+type();
+</script>
 
 </body>
 </html>
