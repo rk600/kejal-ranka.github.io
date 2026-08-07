@@ -3,140 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>From Monolith to Modules — Kejal Ranka</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <title>Killing a Monolith — Kejal Ranka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0f172a; --accent: #2563eb; --accent-soft: #dbeafe; --text: #1e293b; --text-muted: #64748b; --bg: #ffffff; --surface: #f8fafc; --border: #e2e8f0; }
+        :root { --primary: #0f172a; --accent: #6366f1; --accent-glow: rgba(99,102,241,0.1); --text: #1e293b; --text-muted: #64748b; --bg: #fafafa; --surface: #ffffff; --border: #e2e8f0; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
-        .page { max-width: 680px; margin: 0 auto; padding: 60px 24px 80px; }
-        nav { margin-bottom: 48px; }
+
+        .project-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1a2e05 50%, #1e3a0e 100%);
+            padding: 100px 24px 60px;
+            text-align: center;
+        }
+        .project-hero .tag { display: inline-block; background: rgba(34,197,94,0.2); color: #86efac; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .project-hero h1 { font-size: 36px; font-weight: 800; color: white; max-width: 600px; margin: 0 auto 12px; line-height: 1.2; }
+        .project-hero .subtitle { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 520px; margin: 0 auto; }
+
+        .page { max-width: 700px; margin: 0 auto; padding: 48px 24px 80px; }
+        nav { margin-bottom: 32px; }
         nav a { font-size: 14px; color: var(--text-muted); text-decoration: none; }
         nav a:hover { color: var(--accent); }
-        .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 8px; }
-        h1 { font-size: 30px; font-weight: 700; color: var(--primary); margin-bottom: 12px; line-height: 1.3; }
-        .subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 48px; }
-        h2 { font-size: 20px; font-weight: 600; color: var(--primary); margin: 48px 0 12px; }
-        h3 { font-size: 15px; font-weight: 600; color: var(--primary); margin: 28px 0 8px; }
+        h2 { font-size: 22px; font-weight: 700; color: var(--primary); margin: 56px 0 12px; }
+        h2 .emoji { margin-right: 8px; }
+        h3 { font-size: 16px; font-weight: 600; color: var(--primary); margin: 32px 0 8px; }
         p { font-size: 15px; margin-bottom: 16px; }
         ul { margin: 8px 0 16px 20px; font-size: 15px; }
-        li { margin-bottom: 6px; }
-        .callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0; font-size: 14px; line-height: 1.7; }
-        .diagram { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2.2; white-space: pre-wrap; overflow-x: auto; }
+        li { margin-bottom: 8px; }
+        strong { color: var(--primary); }
+        .callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0; font-size: 14px; line-height: 1.7; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .diagram { background: var(--primary); color: #e2e8f0; border-radius: 10px; padding: 28px; margin: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2.2; white-space: pre-wrap; overflow-x: auto; }
+        .diagram .comment { color: #64748b; }
+        .diagram .highlight { color: #86efac; font-weight: 600; }
+        .diagram .bad { color: #fca5a5; }
+
         .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
-        .comparison > div { background: var(--surface); border-radius: 8px; padding: 20px; }
-        .comparison h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+        .comparison > div { border-radius: 10px; padding: 20px; border: 1px solid var(--border); }
+        .comparison .before { background: #fef2f2; border-color: #fecaca; }
+        .comparison .after { background: #f0fdf4; border-color: #bbf7d0; }
+        .comparison h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+        .comparison .before h4 { color: #dc2626; }
+        .comparison .after h4 { color: #16a34a; }
         .comparison ul { margin-left: 16px; font-size: 13px; }
-        .bad { color: #dc2626; }
-        .good { color: #16a34a; }
-        footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); }
+
+        .timeline { margin: 24px 0; }
+        .timeline .week { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+        .timeline .week:last-child { border-bottom: none; }
+        .timeline .week .time { min-width: 70px; font-size: 12px; font-weight: 700; color: var(--accent); }
+        .timeline .week .what { font-size: 14px; }
+
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+        .tech-stack span { background: var(--surface); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; }
+
+        footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
         footer a { font-size: 14px; color: var(--text-muted); text-decoration: none; }
-        @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } h1 { font-size: 24px; } }
+        footer a:hover { color: var(--accent); }
+        @media (max-width: 600px) { .project-hero h1 { font-size: 28px; } .comparison { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-<div class="page">
-    <nav><a href="../../index.html">← Back</a></nav>
 
-    <div class="label">System Design · Data Engineering</div>
-    <h1>From Monolith to Modules: Redesigning a Data Architecture</h1>
-    <p class="subtitle">Why I convinced the team to let me rip apart 14+ working pipelines — and how we migrated without breaking anything.</p>
-
-    <h2>The Inheritance</h2>
-    <p>When I joined the team, I inherited 14+ ETL pipelines built over 2 years by 3 different engineers. They all worked. They all ran on schedule. They all produced correct numbers.</p>
-    <p>So what was the problem?</p>
-    <p>The same business logic — entity selection, savings calculation, metric computation — was <strong>copy-pasted across all of them</strong>. The "entity attributes" query existed in 3 different pipelines with subtle variations. The savings formula was implemented 4 different ways. Nobody knew which version was "correct."</p>
-
-    <div class="callout">
-        <strong>The real cost wasn't technical debt.</strong> It was that we couldn't answer questions the business needed answered. "What channel drives our savings — email or phone?" Impossible. "How do domestic vs international entities respond differently?" Can't tell. The architecture wasn't built for granularity.
-    </div>
-
-    <h2>Why "Just Add a Column" Wasn't the Answer</h2>
-    <p>The instinct was: add channel attribution to the existing savings pipeline. But that would mean:</p>
-    <ul>
-        <li>Adding it to 4 different implementations of the savings formula</li>
-        <li>Hoping all 4 produce the same answer (they wouldn't — they never did)</li>
-        <li>Next quarter, someone needs geography attribution → repeat across all 4 again</li>
-    </ul>
-    <p>The root cause wasn't a missing column. It was an architecture that made every new requirement O(n) effort where n = number of pipelines containing that logic.</p>
-
-    <h2>The Redesign</h2>
-    <div class="diagram">BEFORE: Monolithic (each pipeline owns everything)
-
-Pipeline A: [Select entities] → [Calculate savings] → [Compute metrics] → Output A
-Pipeline B: [Select entities] → [Calculate savings] → [Compute metrics] → Output B
-Pipeline C: [Select entities] → [Calculate savings] → [Compute metrics] → Output C
-  (same logic, copy-pasted, subtly different)
-
-─────────────────────────────────────────────────────────
-
-AFTER: Modular (separation of concerns)
-
-Module 1: Entity Attributes    ← single source of truth
-Module 2: Intervention Tracking ← case-level metadata
-Module 3: Impact Calculation    ← pluggable per stream
-Module 4: Selection Logic       ← configurable filters
-
-Consumers:
-  Dashboard  → reads Module 1 + 3
-  Reporting  → reads Module 2 + 3
-  Targeting  → reads Module 4
-  New Stream → plugs into Module 2 + 3 + 4 (done in days)</div>
-
-    <h2>The Hard Part: Migration Without Downtime</h2>
-    <p>The pipelines ran daily. Leadership reviewed dashboards every Monday. I couldn't break anything during migration.</p>
-
-    <h3>The approach:</h3>
-    <ul>
-        <li><strong>Week 1-2:</strong> Built new modular pipelines alongside the old ones. Both ran in parallel.</li>
-        <li><strong>Week 3:</strong> Row-by-row comparison — old output vs new output. Found 3 discrepancies (all bugs in the OLD code that nobody had noticed).</li>
-        <li><strong>Week 4:</strong> Switched consumers to new modules. Kept old pipelines running but disabled their outputs.</li>
-        <li><strong>Week 5:</strong> Decommissioned old pipelines after 1 week of clean parallel run.</li>
-    </ul>
-
-    <div class="callout">
-        <strong>Unexpected win:</strong> The parallel comparison found 3 bugs in the original pipelines — savings were being calculated from resolution date instead of action date, delaying attribution by 1-3 weeks. The "migration" was actually a correctness fix disguised as a refactor.
-    </div>
-
-    <h2>Before vs After</h2>
-    <div class="comparison">
-        <div>
-            <h4 class="bad">Before</h4>
-            <ul>
-                <li>New stream onboarding: 2-3 months</li>
-                <li>Bug fix: edit N pipelines, hope for consistency</li>
-                <li>Attribution: impossible (no channel/segment data)</li>
-                <li>Handover to new engineer: weeks of context</li>
-                <li>Answering "why is this number different?": archaeology</li>
-            </ul>
-        </div>
-        <div>
-            <h4 class="good">After</h4>
-            <ul>
-                <li>New stream onboarding: 1-2 weeks</li>
-                <li>Bug fix: edit once, propagates everywhere</li>
-                <li>Attribution: channel × segment × geography</li>
-                <li>Handover: self-documenting modules</li>
-                <li>"Why is this different?": impossible — one source</li>
-            </ul>
-        </div>
-    </div>
-
-    <h2>What I Learned</h2>
-
-    <h3>1. Sell the outcome, not the refactor</h3>
-    <p>"I want to modularize our pipelines" gets a polite no. "I can tell you whether email or phone drives more savings — but only if we restructure the data layer" gets a yes. Always tie technical work to a business question someone is waiting to answer.</p>
-
-    <h3>2. Parallel runs are non-negotiable</h3>
-    <p>I was tempted to just swap in the new code. But the parallel comparison caught bugs that would have been blamed on "the migration broke something." Those 2 weeks of parallel runs bought credibility.</p>
-
-    <h3>3. Perfect parity is the wrong goal</h3>
-    <p>When the comparison showed 3 discrepancies, my instinct was "make the new code match the old exactly." But investigating them revealed the OLD code was wrong. Parity with a broken system isn't a virtue.</p>
-
-    <h3>4. Modules need contracts</h3>
-    <p>Without explicit input/output schemas per module, downstream consumers break silently when you add a column or change a type. I defined interfaces — the extra hour upfront saved weeks of debugging later.</p>
-
-    <footer><a href="../../index.html">← Back to portfolio</a></footer>
+<div class="project-hero">
+    <div class="tag">System Design · Data Architecture</div>
+    <h1>Killing a Monolith Without Breaking Production</h1>
+    <p class="subtitle">How I convinced the team to let me rip apart 14+ working pipelines — and migrated without a single broken Monday dashboard.</p>
 </div>
+
+<div class="page">
+    <nav><a href="../../index.html">← Back to portfolio</a></nav>
+
+    <h2><span class="emoji">🎯</span> Situation</h2>
+    <p>I inherited 14+ ETL pipelines built over 2 years by 3 different engineers. They all worked. They all ran on schedule. They all produced numbers that appeared in executive dashboards every Monday.</p>
+    <p>So what was the problem?</p>
+    <p>The same business logic — entity selection, savings calculation, metric computation — was <strong>copy-pasted across all of them</strong>. The savings formula existed in 4 different versions. The entity attributes query was duplicated 3 times with subtle differences. Nobody knew which version was "correct."</p>
+
+    <div class="callout">
+        <strong>The real cost wasn't technical debt.</strong> It was unanswerable questions. "What channel drives our savings — email or phone?" Impossible to tell. "How do domestic vs international entities differ?" Can't say. The architecture wasn't built for granularity — it was built for "get a number out by Monday."
+    </div>
+
+    <h2><span class="emoji">⚡</span> Task</h2>
+    <p>Redesign the data architecture to:</p>
+    <ul>
+        <li>Eliminate code duplication (single source of truth per domain)</li>
+        <li>Enable granular attribution (channel × segment × geography)</li>
+        <li>Make onboarding new operational streams fast (weeks, not months)</li>
+        <li><strong>Do it without breaking a single Monday dashboard.</strong></li>
+    </ul>
+
+    <h2><span class="emoji">🔧</span> Action</h2>
+
+    <h3>The Architecture</h3>
+    <div class="diagram"><span class="comment">// BEFORE: Every pipeline owns everything (copy-paste hell)</span>
+
+<span class="bad">Pipeline A:</span> [Select] → [Calculate] → [Aggregate] → Output A
+<span class="bad">Pipeline B:</span> [Select] → [Calculate] → [Aggregate] → Output B
+<span class="bad">Pipeline C:</span> [Select] → [Calculate] → [Aggregate] → Output C
+<span class="comment">// Same logic, subtly different. Bug fix = edit all 14. Miss one = mismatch.</span>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<span class="comment">// AFTER: Separation of concerns (modular)</span>
+
+<span class="highlight">Module 1:</span> Entity Attributes    ← ONE source of truth
+<span class="highlight">Module 2:</span> Intervention Tracking ← Case-level metadata
+<span class="highlight">Module 3:</span> Impact Calculation    ← Pluggable per stream
+<span class="highlight">Module 4:</span> Selection Logic       ← Configurable filters
+
+Consumers just read from modules:
+  Dashboard  → Module 1 + 3
+  Reporting  → Module 2 + 3
+  Targeting  → Module 4
+  <span class="highlight">New Stream → plug into 2 + 3 + 4 → done in days</span></div>
+
+    <h3>The Migration (Zero Downtime)</h3>
+    <div class="timeline">
+        <div class="week">
+            <div class="time">Week 1-2</div>
+            <div class="what">Built new modular pipelines <strong>alongside</strong> the old ones. Both running in parallel. Leadership sees no change.</div>
+        </div>
+        <div class="week">
+            <div class="time">Week 3</div>
+            <div class="what">Row-by-row output comparison: old vs new. <strong>Found 3 discrepancies</strong> — all bugs in the OLD code that nobody had noticed.</div>
+        </div>
+        <div class="week">
+            <div class="time">Week 4</div>
+            <div class="what">Switched consumers to new modules. Old pipelines still running (safety net) but outputs disabled.</div>
+        </div>
+        <div class="week">
+            <div class="time">Week 5</div>
+            <div class="what">Decommissioned old pipelines. Clean cutover after 1 week of verified parallel run.</div>
+        </div>
+    </div>
+
+    <div class="callout">
+        <strong>Unexpected win:</strong> The parallel comparison revealed savings were being calculated from <em>resolution date</em> instead of <em>action date</em> — delaying attribution by 1-3 weeks. The "migration" was actually a correctness fix disguised as a refactor. Nobody would have found this without the row-by-row comparison.
+    </div>
+
+    <h2><span class="emoji">📊</span> Result</h2>
+    <div class="comparison">
+        <div class="before">
+            <h4>Before</h4>
+            <ul>
+                <li>New stream: 2-3 months</li>
+                <li>Bug fix: edit N pipelines, pray</li>
+                <li>Attribution: impossible</li>
+                <li>Handover: weeks of context</li>
+                <li>"Why is this different?" → archaeology</li>
+            </ul>
+        </div>
+        <div class="after">
+            <h4>After</h4>
+            <ul>
+                <li>New stream: 1-2 weeks</li>
+                <li>Bug fix: edit once, done</li>
+                <li>Attribution: channel × segment × geo</li>
+                <li>Handover: self-documenting</li>
+                <li>"Why is this different?" → impossible</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2><span class="emoji">🧠</span> What I Learned</h2>
+    <ul>
+        <li><strong>Sell the outcome, not the refactor.</strong> "I want to modularize our pipelines" gets a polite no. "I can tell you whether email or phone drives more savings — but only if we restructure" gets a yes.</li>
+        <li><strong>Parallel runs buy credibility.</strong> Those 2 weeks of comparison caught bugs that would have been blamed on "the migration broke something."</li>
+        <li><strong>Perfect parity with broken code isn't a virtue.</strong> When comparison showed discrepancies, my instinct was to match the old output exactly. Investigating revealed the old code was wrong. Don't replicate bugs.</li>
+        <li><strong>Modules need contracts.</strong> Without explicit input/output schemas, downstream consumers break silently. The hour spent defining interfaces saved weeks.</li>
+    </ul>
+
+    <h2><span class="emoji">🛠</span> Tech Stack</h2>
+    <div class="tech-stack">
+        <span>Redshift</span>
+        <span>SQL (ETL)</span>
+        <span>Scheduled Jobs</span>
+        <span>Modular Design</span>
+        <span>Data Quality SLAs</span>
+        <span>Parallel Migration</span>
+    </div>
+
+    <footer>
+        <a href="nlp-pipeline.html">← Prev: Self-Improving Pipeline</a>
+        <a href="bias-discovery.html">Next: The $5M Bug →</a>
+    </footer>
+</div>
+
 </body>
 </html>

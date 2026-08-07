@@ -3,138 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The $5M Bug Nobody Knew Existed — Kejal Ranka</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <title>The $5M Bug — Kejal Ranka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0f172a; --accent: #2563eb; --accent-soft: #dbeafe; --text: #1e293b; --text-muted: #64748b; --bg: #ffffff; --surface: #f8fafc; --border: #e2e8f0; }
+        :root { --primary: #0f172a; --accent: #6366f1; --accent-glow: rgba(99,102,241,0.1); --text: #1e293b; --text-muted: #64748b; --bg: #fafafa; --surface: #ffffff; --border: #e2e8f0; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
-        .page { max-width: 680px; margin: 0 auto; padding: 60px 24px 80px; }
-        nav { margin-bottom: 48px; }
+
+        .project-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #451a03 50%, #7c2d12 100%);
+            padding: 100px 24px 60px;
+            text-align: center;
+        }
+        .project-hero .tag { display: inline-block; background: rgba(251,146,60,0.2); color: #fdba74; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .project-hero h1 { font-size: 36px; font-weight: 800; color: white; max-width: 600px; margin: 0 auto 12px; line-height: 1.2; }
+        .project-hero .subtitle { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 520px; margin: 0 auto; }
+
+        .page { max-width: 700px; margin: 0 auto; padding: 48px 24px 80px; }
+        nav { margin-bottom: 32px; }
         nav a { font-size: 14px; color: var(--text-muted); text-decoration: none; }
         nav a:hover { color: var(--accent); }
-        .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 8px; }
-        h1 { font-size: 30px; font-weight: 700; color: var(--primary); margin-bottom: 12px; line-height: 1.3; }
-        .subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 48px; }
-        h2 { font-size: 20px; font-weight: 600; color: var(--primary); margin: 48px 0 12px; }
-        h3 { font-size: 15px; font-weight: 600; color: var(--primary); margin: 28px 0 8px; }
+        h2 { font-size: 22px; font-weight: 700; color: var(--primary); margin: 56px 0 12px; }
+        h2 .emoji { margin-right: 8px; }
+        h3 { font-size: 16px; font-weight: 600; color: var(--primary); margin: 32px 0 8px; }
         p { font-size: 15px; margin-bottom: 16px; }
         ul { margin: 8px 0 16px 20px; font-size: 15px; }
-        li { margin-bottom: 6px; }
-        .callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0; font-size: 14px; line-height: 1.7; }
-        .callout.warning { border-left-color: #f59e0b; background: #fffbeb; }
-        .diagram { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2.2; white-space: pre-wrap; overflow-x: auto; }
-        .timeline { margin: 24px 0; padding-left: 20px; border-left: 2px solid var(--border); }
-        .timeline .event { margin-bottom: 20px; padding-left: 16px; position: relative; }
-        .timeline .event::before { content: ''; position: absolute; left: -25px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
-        .timeline .event .time { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
-        .timeline .event p { margin-top: 4px; font-size: 14px; }
-        footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); }
+        li { margin-bottom: 8px; }
+        strong { color: var(--primary); }
+        .callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0; font-size: 14px; line-height: 1.7; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .callout.danger { border-left-color: #ef4444; background: #fef2f2; }
+        .callout.success { border-left-color: #22c55e; background: #f0fdf4; }
+        .diagram { background: var(--primary); color: #e2e8f0; border-radius: 10px; padding: 28px; margin: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2.2; white-space: pre-wrap; overflow-x: auto; }
+        .diagram .comment { color: #64748b; }
+        .diagram .bad { color: #fca5a5; }
+        .diagram .good { color: #86efac; }
+        .diagram .highlight { color: #fde68a; font-weight: 600; }
+
+        .timeline { margin: 32px 0; padding-left: 24px; border-left: 3px solid var(--border); }
+        .timeline .event { margin-bottom: 24px; padding-left: 20px; position: relative; }
+        .timeline .event::before { content: ''; position: absolute; left: -14px; top: 8px; width: 12px; height: 12px; border-radius: 50%; border: 3px solid var(--accent); background: var(--bg); }
+        .timeline .event .day { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+        .timeline .event p { margin-top: 4px; font-size: 14px; margin-bottom: 0; }
+
+        .outcome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+        .outcome-grid .item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+        .outcome-grid .item .val { font-size: 20px; font-weight: 700; color: var(--accent); }
+        .outcome-grid .item .label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+        .tech-stack span { background: var(--surface); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; }
+
+        footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
         footer a { font-size: 14px; color: var(--text-muted); text-decoration: none; }
-        @media (max-width: 600px) { h1 { font-size: 24px; } }
+        footer a:hover { color: var(--accent); }
+        @media (max-width: 600px) { .project-hero h1 { font-size: 28px; } .outcome-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
+
+<div class="project-hero">
+    <div class="tag">Analytics · Investigation · Metric Design</div>
+    <h1>The $5M Bug That Didn't Throw an Error</h1>
+    <p class="subtitle">A hidden assumption was silently producing wrong answers for months. Everyone trusted the metric. The metric was lying.</p>
+</div>
+
 <div class="page">
-    <nav><a href="../../index.html">← Back</a></nav>
+    <nav><a href="../../index.html">← Back to portfolio</a></nav>
 
-    <div class="label">Analytics · Investigation</div>
-    <h1>The $5M Bug Nobody Knew Existed</h1>
-    <p class="subtitle">A lead-time assumption buried in a calculation was silently making a program look like it wasn't working. For months.</p>
+    <h2><span class="emoji">🎯</span> Situation</h2>
+    <p>A new operational program had launched. Significant investment — interventions, outreach, follow-ups. The performance metric told a discouraging story: <strong>~30% effectiveness.</strong> Barely worth the cost.</p>
+    <p>Leadership paused expansion. Why scale something that doesn't work?</p>
+    <p>But the operators on the ground disagreed. They could see improvements in individual cases. The numbers just didn't match what they observed every day.</p>
 
-    <h2>The Situation</h2>
-    <p>A new operational program had launched. The team was investing significant resources — interventions, outreach, follow-ups. But the performance metrics told a discouraging story: the program appeared to have ~30% effectiveness. Barely worth the investment.</p>
-    <p>Leadership paused expansion. Why scale something that's not working?</p>
-    <p>But the operators on the ground disagreed. They could SEE the improvements in individual cases. The numbers just... didn't reflect reality.</p>
-
-    <div class="callout warning">
-        <strong>The red flag I noticed:</strong> When experienced operators say "this is working" and the metric says "this isn't working" — the metric is probably wrong. Operators have domain intuition that metrics don't.
+    <div class="callout danger">
+        <strong>The red flag:</strong> When experienced operators say "this is working" and the metric says "this isn't working" — one of them is wrong. My bet: the metric.
     </div>
 
-    <h2>The Investigation</h2>
-    <p>I started by asking a simple question: <strong>how do we define "post-intervention"?</strong></p>
-    <p>The answer: any transaction that is <em>delivered</em> after the intervention date counts as "post-intervention performance."</p>
-    <p>For most programs, this is fine. Intervention happens → next delivery is 3-5 days later → measurement is clean.</p>
-    <p>But this program was different. Its transactions have <strong>2-3 month lead times</strong> between creation and delivery.</p>
-
-    <div class="diagram">THE BUG:
-
-Timeline:
-  Jan 15: Transaction CREATED (before intervention)
-  Feb 1:  INTERVENTION happens
-  Mar 20: Transaction DELIVERED (after intervention)
-
-The metric counted this as "post-intervention" ← WRONG
-The transaction was created BEFORE the intervention.
-The entity hadn't changed behavior yet — it just took 2 months to deliver.
-
-Impact: Hundreds of pre-intervention transactions were contaminating
-the "post" measurement window → making the program look ineffective.</div>
-
-    <h2>Why Nobody Caught It</h2>
+    <h2><span class="emoji">⚡</span> Task</h2>
+    <p>Figure out why the metric contradicts reality. Either:</p>
     <ul>
-        <li><strong>The formula "worked"</strong> — it produced numbers, didn't error, ran on schedule. The most dangerous bugs are the ones that don't throw errors.</li>
-        <li><strong>Other programs were fine</strong> — with 3-5 day lead times, the bias was negligible. This was the first long-lead-time program.</li>
-        <li><strong>The assumption was implicit</strong> — nowhere in the documentation did it say "this assumes short lead times." It was just... how it had always been done.</li>
-        <li><strong>Confirmation bias</strong> — "the program isn't working" was a plausible explanation, so nobody questioned the measurement.</li>
+        <li>The program genuinely isn't working (operators are wrong) → we should cut investment</li>
+        <li>The measurement is flawed (metric is wrong) → we're leaving $5M+ on the table</li>
+    </ul>
+    <p>Stakes: leadership decisions worth millions were hanging on this answer.</p>
+
+    <h2><span class="emoji">🔧</span> Action</h2>
+    <p>I started with one question: <strong>"How do we define 'post-intervention'?"</strong></p>
+    <p>The answer: any transaction <em>delivered</em> after the intervention date counts as post-intervention performance.</p>
+    <p>For most programs, this works. Intervention → next delivery in 3-5 days → clean measurement.</p>
+    <p>But this program was different. <strong>2-3 month lead times</strong> between creation and delivery.</p>
+
+    <div class="diagram"><span class="highlight">THE BUG:</span>
+
+Timeline for a single transaction:
+  <span class="bad">Jan 15:</span>  Transaction CREATED (before any intervention)
+  Feb 1:   INTERVENTION happens
+  <span class="bad">Mar 20:</span>  Transaction DELIVERED (after intervention)
+
+The metric counted this as <span class="bad">"post-intervention"</span> ← WRONG.
+The entity hadn't changed behavior. It just took 2 months to deliver.
+
+<span class="comment">// Hundreds of pre-intervention transactions were contaminating</span>
+<span class="comment">// the "post" window → metric shows 30% instead of 80%+</span>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<span class="highlight">THE FIX:</span>
+
+<span class="good">Use CREATION DATE, not DELIVERY DATE.</span>
+Only count transactions created AFTER the intervention.
+Now measuring actual behavior change, not pipeline timing.
+
+Result: Program effectiveness = <span class="good">80%+</span> (not 30%)</div>
+
+    <h3>Why Nobody Caught It</h3>
+    <ul>
+        <li><strong>The formula produced numbers.</strong> No errors, no nulls, ran on schedule. The most dangerous bugs don't crash.</li>
+        <li><strong>Other programs were fine.</strong> With 3-5 day lead times, the bias was negligible. This was the first long-lead program.</li>
+        <li><strong>The assumption was invisible.</strong> Nowhere documented. Just "how it's always been done."</li>
+        <li><strong>Confirmation bias.</strong> "The program isn't working" was a plausible story. Nobody questioned the measurement.</li>
     </ul>
 
-    <h2>The Fix</h2>
-
-    <h3>Immediate: Switch from delivery date to creation date</h3>
-    <p>Only count transactions <em>created</em> after the intervention — regardless of when they're delivered. This ensures we're measuring actual behavior change, not pipeline timing.</p>
-
-    <h3>Validation: 6-month parallel comparison</h3>
-    <p>I ran both methodologies (old vs new) on 6 months of historical data. The corrected methodology showed the program was performing at <strong>80%+ effectiveness</strong> — not the ~30% the biased metric suggested.</p>
-
-    <h3>Prevention: The "Improvement Index"</h3>
-    <p>I developed a new metric — <strong>Current Year Rate minus Previous Year Rate</strong> — that's inherently immune to this class of bias. By comparing like-for-like periods (Jan vs Jan, Q1 vs Q1), it eliminates both lead-time contamination AND seasonal distortion in a single formula.</p>
-
-    <div class="callout">
-        <strong>The Improvement Index</strong> was adopted as a standardized metric across the organization. It became the primary way teams measure intervention effectiveness, replacing 3 different bespoke calculations.
-    </div>
-
-    <h2>The Investigation Timeline</h2>
+    <h3>The Investigation Timeline</h3>
     <div class="timeline">
         <div class="event">
-            <div class="time">Day 1</div>
-            <p>Operators say "this is working but metrics don't show it." I decide to trust the operators.</p>
+            <div class="day">Day 1</div>
+            <p>Operators say it's working. Metric says it isn't. I decide to trust the operators.</p>
         </div>
         <div class="event">
-            <div class="time">Day 2</div>
-            <p>Map out the full measurement methodology. Ask: "what assumptions does this make?"</p>
+            <div class="day">Day 2</div>
+            <p>Map the full measurement methodology. Ask: "what implicit assumptions does this make?"</p>
         </div>
         <div class="event">
-            <div class="time">Day 3</div>
+            <div class="day">Day 3</div>
             <p>Realize delivery date ≠ creation date for this program. Hypothesis: lead-time contamination.</p>
         </div>
         <div class="event">
-            <div class="time">Day 4-5</div>
-            <p>Build parallel calculation (creation date vs delivery date). Compare 6 months of data. Hypothesis confirmed: 80% vs 30%.</p>
+            <div class="day">Day 4-5</div>
+            <p>Build parallel calculation. Compare 6 months of data. Hypothesis confirmed: 80% vs 30%.</p>
         </div>
         <div class="event">
-            <div class="time">Day 6</div>
-            <p>Present findings to stakeholders. Campaign expansion resumed.</p>
+            <div class="day">Day 6</div>
+            <p>Present to stakeholders. Campaign expansion resumes immediately.</p>
         </div>
         <div class="event">
-            <div class="time">Week 3</div>
-            <p>Develop Improvement Index as a general solution. Roll out to 5 teams.</p>
+            <div class="day">Week 3</div>
+            <p>Develop "Improvement Index" as a general-purpose replacement. Roll out to 5 teams.</p>
         </div>
     </div>
 
-    <h2>Impact</h2>
+    <h2><span class="emoji">📊</span> Result</h2>
+    <div class="outcome-grid">
+        <div class="item"><div class="val">$5M+</div><div class="label">Revenue unblocked (expansion resumed)</div></div>
+        <div class="item"><div class="val">5 teams</div><div class="label">Adopted the new methodology</div></div>
+        <div class="item"><div class="val">80%+</div><div class="label">True program effectiveness (was showing 30%)</div></div>
+        <div class="item"><div class="val">1 metric</div><div class="label">Novel "Improvement Index" — now org-wide KPI</div></div>
+    </div>
+
+    <div class="callout success">
+        <strong>The "Improvement Index":</strong> Current Year Rate − Previous Year Rate. Immune to lead-time bias AND seasonal distortion. Became the standardized way teams measure intervention effectiveness, replacing 3 bespoke calculations. Influenced 2026 org-wide goal-setting.
+    </div>
+
+    <h2><span class="emoji">🧠</span> The Meta-Lesson</h2>
+    <p>This wasn't a sophisticated statistical problem. It was a <strong>wrong assumption that nobody questioned</strong> because the system "worked."</p>
+    <p>Three principles I took away:</p>
     <ul>
-        <li><strong>$5M+ unblocked</strong> — campaign expansion resumed after proving the program was effective all along</li>
-        <li><strong>Methodology standardized</strong> — the fix and Improvement Index adopted across 5 teams</li>
-        <li><strong>Systematic audit triggered</strong> — all time-based metrics reviewed for similar lead-time assumptions</li>
-        <li><strong>Trust restored</strong> — operators and metrics aligned again; leadership confidence in data recovered</li>
+        <li><strong>Trust domain experts over dashboards.</strong> When metrics contradict experienced operators, investigate the measurement first.</li>
+        <li><strong>The most dangerous bugs produce plausible wrong answers.</strong> A crash is easy to fix. A number that looks reasonable but is wrong can persist for months.</li>
+        <li><strong>Don't iterate on the operation — question the measurement.</strong> The team was trying harder interventions. The fix was in the formula, not the program.</li>
     </ul>
 
-    <h2>The Meta-Lesson</h2>
-    <p>This wasn't a sophisticated statistical problem. It was a <strong>wrong assumption</strong> that nobody questioned because the system "worked." The hardest bugs aren't the ones that crash — they're the ones that produce plausible-looking wrong answers.</p>
-    <p>My takeaway: whenever a metric contradicts ground-truth human observation, investigate the measurement first. The humans are usually right.</p>
-
-    <footer><a href="../../index.html">← Back to portfolio</a></footer>
+    <footer>
+        <a href="architecture-redesign.html">← Prev: Killing a Monolith</a>
+        <a href="../../index.html">Back to portfolio →</a>
+    </footer>
 </div>
+
 </body>
 </html>

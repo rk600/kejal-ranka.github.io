@@ -3,152 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Building a Self-Improving NLP Pipeline — Kejal Ranka</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <title>A Pipeline That Teaches Itself — Kejal Ranka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0f172a; --accent: #2563eb; --accent-soft: #dbeafe; --text: #1e293b; --text-muted: #64748b; --bg: #ffffff; --surface: #f8fafc; --border: #e2e8f0; }
+        :root { --primary: #0f172a; --accent: #6366f1; --accent-glow: rgba(99,102,241,0.1); --text: #1e293b; --text-muted: #64748b; --bg: #fafafa; --surface: #ffffff; --border: #e2e8f0; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
-        .page { max-width: 680px; margin: 0 auto; padding: 60px 24px 80px; }
-        nav { margin-bottom: 48px; }
+
+        /* Hero banner */
+        .project-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            padding: 100px 24px 60px;
+            text-align: center;
+        }
+        .project-hero .tag { display: inline-block; background: rgba(99,102,241,0.2); color: #a5b4fc; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .project-hero h1 { font-size: 36px; font-weight: 800; color: white; max-width: 600px; margin: 0 auto 12px; line-height: 1.2; }
+        .project-hero .subtitle { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 500px; margin: 0 auto; }
+
+        .page { max-width: 700px; margin: 0 auto; padding: 48px 24px 80px; }
+        nav { margin-bottom: 32px; }
         nav a { font-size: 14px; color: var(--text-muted); text-decoration: none; }
         nav a:hover { color: var(--accent); }
-        .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 8px; }
-        h1 { font-size: 30px; font-weight: 700; color: var(--primary); margin-bottom: 12px; line-height: 1.3; }
-        .subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 48px; }
-        h2 { font-size: 20px; font-weight: 600; color: var(--primary); margin: 48px 0 12px; }
-        h3 { font-size: 15px; font-weight: 600; color: var(--primary); margin: 28px 0 8px; }
+
+        h2 { font-size: 22px; font-weight: 700; color: var(--primary); margin: 56px 0 12px; }
+        h2 .emoji { margin-right: 8px; }
+        h3 { font-size: 16px; font-weight: 600; color: var(--primary); margin: 32px 0 8px; }
         p { font-size: 15px; margin-bottom: 16px; }
         ul { margin: 8px 0 16px 20px; font-size: 15px; }
-        li { margin-bottom: 6px; }
-        .callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0; font-size: 14px; line-height: 1.7; }
-        .diagram { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2.2; white-space: pre-wrap; overflow-x: auto; }
+        li { margin-bottom: 8px; }
+        strong { color: var(--primary); }
+
+        .callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0; font-size: 14px; line-height: 1.7; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .callout.summit { border-left-color: #f59e0b; background: #fffbeb; }
+        .callout .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .callout .label.gold { color: #d97706; }
+
+        .diagram { background: var(--primary); color: #e2e8f0; border-radius: 10px; padding: 28px; margin: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2.4; white-space: pre-wrap; overflow-x: auto; }
+        .diagram .comment { color: #64748b; }
+        .diagram .highlight { color: #a5b4fc; font-weight: 600; }
+
         .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
-        .metrics .m { background: var(--surface); border-radius: 8px; padding: 16px; text-align: center; }
-        .metrics .m .n { font-size: 22px; font-weight: 700; color: var(--accent); }
-        .metrics .m .l { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-        .progress { margin: 24px 0; }
+        .metrics .m { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; text-align: center; }
+        .metrics .m .n { font-size: 26px; font-weight: 800; color: var(--accent); }
+        .metrics .m .l { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+        .progress { margin: 24px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
         .progress table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .progress th, .progress td { padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; }
-        .progress th { font-weight: 600; color: var(--text-muted); font-size: 11px; text-transform: uppercase; }
-        footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); }
+        .progress th { padding: 12px 16px; text-align: left; font-weight: 600; color: var(--text-muted); font-size: 11px; text-transform: uppercase; background: var(--bg); }
+        .progress td { padding: 10px 16px; border-top: 1px solid var(--border); }
+        .progress .active { background: var(--accent-glow); }
+
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+        .tech-stack span { background: var(--surface); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; }
+
+        footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
         footer a { font-size: 14px; color: var(--text-muted); text-decoration: none; }
-        @media (max-width: 600px) { .metrics { grid-template-columns: 1fr; } h1 { font-size: 24px; } }
+        footer a:hover { color: var(--accent); }
+        @media (max-width: 600px) { .project-hero h1 { font-size: 28px; } .metrics { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
+
+<div class="project-hero">
+    <div class="tag">AI · Production Pipeline · Presented at EU Summit (Luxembourg)</div>
+    <h1>A Pipeline That Teaches Itself</h1>
+    <p class="subtitle">How I turned 18,000 unreadable text records into a self-improving classification system — and got invited to present it at a European leadership summit.</p>
+</div>
+
 <div class="page">
-    <nav><a href="../../index.html">← Back</a></nav>
+    <nav><a href="../../index.html">← Back to portfolio</a></nav>
 
-    <div class="label">AI / ML · Production System</div>
-    <h1>Building a Self-Improving NLP Classification Pipeline</h1>
-    <p class="subtitle">How I went from 18,000 unreadable text records to a system that classifies them automatically — and gets better on its own.</p>
+    <h2><span class="emoji">🎯</span> Situation</h2>
+    <p>Account managers across a major e-commerce marketplace record 18,000+ customer anecdotes per year across two programs. Each entry contains critical business signal: what programs customers care about, what blocks their growth, whether sentiment is improving.</p>
+    <p>But it's all free text. Messy. Inconsistent. No one reads 18,000 entries. Product managers were making strategy decisions based on gut feel and the 50 most recent entries they happened to skim.</p>
+    <p><strong>The question leadership asked:</strong> "What do our customers actually think about our programs — and how is that changing over time?"</p>
+    <p>Nobody could answer it. Not with data.</p>
 
-    <h2>The Problem Nobody Could Solve Manually</h2>
-    <p>Account managers across a major e-commerce marketplace record 18,000+ customer feedback entries per year. Each one contains signal: what programs customers care about, what's blocking their growth, and whether sentiment is shifting.</p>
-    <p>But it's all free text. Messy, inconsistent, multilingual. No one can read 18,000 entries. PMs were making strategy decisions based on gut feel and the 50 most recent entries they happened to skim.</p>
-    <p><strong>The question:</strong> Can we turn this unstructured noise into structured intelligence — automatically, daily, without a team of labelers?</p>
-
-    <h2>Why This Was Hard</h2>
-    <p>This wasn't a simple "throw it at GPT" problem:</p>
+    <h2><span class="emoji">⚡</span> Task</h2>
+    <p>Build a system that:</p>
     <ul>
-        <li><strong>Domain complexity:</strong> 15 program categories that sound similar to outsiders (e.g., "serial number tracking for fraud detection" vs "investigating missing inventory during receiving" — both relate to inventory, but are completely different programs)</li>
-        <li><strong>Multi-label:</strong> A single entry can discuss 3+ programs with different sentiments for each</li>
-        <li><strong>No training data:</strong> Zero labeled examples existed when I started</li>
-        <li><strong>Taxonomy mismatch:</strong> 38 different tag variants mapped to 15 canonical categories — with no documentation</li>
-        <li><strong>Accuracy bar:</strong> PMs would lose trust if classifications were obviously wrong. One bad week = adoption dies.</li>
+        <li>Classifies every anecdote into structured dimensions (program category, sentiment, trend, adoption blocker)</li>
+        <li>Runs daily, automatically, with zero human intervention</li>
+        <li>Serves results to product leadership via a real-time dashboard</li>
+        <li>Gets more accurate over time — without a dedicated labeling team</li>
     </ul>
 
-    <h2>The Architecture I Designed</h2>
-    <div class="diagram">DATA FLOW (fully automated, daily)
+    <div class="callout">
+        <div class="label">The constraint that made it hard</div>
+        <strong>Zero labeled training data existed.</strong> No taxonomy had been defined. 38 different tag variants mapped to 15 canonical categories — with no documentation. And the accuracy bar was high: one week of obviously wrong classifications = PMs lose trust = system dies.
+    </div>
 
-1. ETL (~4 min)
-   SQL extracts 19K rows from source tables
-   Joins seller metadata (revenue band, category, contact history)
-   Deduplicates → parquet → S3
+    <h2><span class="emoji">🔧</span> Action</h2>
 
-2. TRIGGER (event-driven)
-   S3 PUT event → Lambda function
-   ├── Dedup check: same file hash? → skip
-   └── Cooldown check: ran in last 6 hours? → skip
-   If conditions pass → start SageMaker job
+    <h3>Architecture: Event-Driven, Self-Improving</h3>
+    <div class="diagram"><span class="comment">// Fully automated. Runs daily. No human in the loop.</span>
 
-3. ENRICH (~60 min, 25 concurrent threads)
+<span class="highlight">1. EXTRACT</span> (ETL, ~4 min)
+   SQL → 19K rows (deduped) → parquet → S3
+
+<span class="highlight">2. TRIGGER</span> (event-driven)
+   S3 PUT event → Lambda
+   ├── Same file hash? → skip (dedup)
+   └── Ran in last 6 hours? → skip (cooldown)
+   Pass → start SageMaker Processing Job
+
+<span class="highlight">3. ENRICH</span> (SageMaker, 25 threads, ~60 min)
    For each record:
-   ├── Parse tags → canonical categories (38 variants → 15)
-   ├── Retrieve Knowledge Base context (35 domain entries)
+   ├── Parse tags → 15 canonical categories
+   ├── Retrieve Knowledge Base context (35 entries)
    ├── Embed text (1024-dim vector)
    ├── Find top-3 similar gold examples (cosine + boosting)
-   ├── Build 6-layer prompt → LLM inference
-   └── Post-process: normalize, match taxonomy, threshold
+   ├── Build <span class="highlight">6-layer prompt</span> → LLM inference
+   └── Post-process: normalize, threshold, validate
 
-4. SERVE
-   Enriched parquet (35 columns) → Dashboard
-   PMs see: trends by category, sentiment shifts, top blockers</div>
+<span class="highlight">4. LEARN</span> (auto-harvest)
+   Outputs with confidence ≥ 0.95 → auto-added to gold set
+   Gold set: 10 → 222 examples (no human labeling)
 
-    <h2>The Key Insight: 6-Layer Prompting</h2>
-    <p>Zero-shot accuracy was ~70%. Not terrible, but not trustworthy. The breakthrough was layering context in order of specificity:</p>
+<span class="highlight">5. SERVE</span>
+   Enriched parquet (35 cols) → Real-time dashboard
+   PMs see: trends × sentiment × category × time</div>
 
-    <div class="callout">
-        <strong>Layer 1:</strong> Stream identifier (which program family)<br>
-        <strong>Layer 2:</strong> Knowledge base — what each program actually does, common mistakes to avoid<br>
-        <strong>Layer 3:</strong> Taxonomy — predefined category labels to choose from (66 for one stream, free-form for another)<br>
-        <strong>Layer 4:</strong> Few-shot examples — top-3 most similar validated entries from gold set<br>
-        <strong>Layer 5:</strong> Blocker categories (10 predefined reasons for hesitation)<br>
-        <strong>Layer 6:</strong> The actual text + output schema
-    </div>
+    <h3>The Breakthrough: 6-Layer Prompting</h3>
+    <p>Zero-shot accuracy was ~70%. Not terrible, but not trustworthy. I discovered that layering context in a specific order dramatically improved quality:</p>
+    <ul>
+        <li><strong>Layer 1:</strong> Stream identifier (which program family)</li>
+        <li><strong>Layer 2:</strong> Knowledge base — what each program does, common mistakes to avoid (35 curated entries from 3 source documents)</li>
+        <li><strong>Layer 3:</strong> Taxonomy — predefined labels to choose from (66 trends)</li>
+        <li><strong>Layer 4:</strong> Few-shot examples — 3 most similar validated entries from gold set (cosine similarity + stream/category boosting)</li>
+        <li><strong>Layer 5:</strong> Blocker categories (10 predefined adoption barriers)</li>
+        <li><strong>Layer 6:</strong> The actual text + JSON output schema</li>
+    </ul>
+    <p>Each layer addresses a specific failure mode I observed. The knowledge base alone gave a bigger accuracy lift than any prompt engineering — because the model simply <em>didn't know</em> what the programs were.</p>
 
-    <p>This gives the model domain expertise, corrective examples, AND structured output constraints — all before seeing the input. Each layer addresses a specific failure mode I observed in earlier iterations.</p>
-
-    <h2>Making It Self-Improving</h2>
-    <p>The system gets better without human intervention through a three-phase learning mechanism:</p>
-
-    <h3>Phase 1: Few-Shot RAG (live)</h3>
-    <p>A gold set of validated examples is embedded as 1024-dim vectors. At runtime, each new record is embedded and compared via cosine similarity — with boosting (+0.1 for same stream, +0.15 for same category). Top-3 matches above threshold become in-context examples.</p>
-
-    <h3>Phase 2: Auto-Harvest (live)</h3>
-    <p>After each run, outputs with confidence ≥ 0.95 that match predefined taxonomy are automatically added to the gold set. This grew it from 10 manual examples to 222 — covering all 15 categories — without any human labeling.</p>
-
-    <h3>Phase 3: Fine-Tuning (future)</h3>
-    <p>At 2,000+ gold examples, export as training data and fine-tune a custom model. Target: 92%+ accuracy at lower per-call cost.</p>
-
+    <h3>Self-Improving Without Human Labelers</h3>
+    <p>The system grows its own training data:</p>
     <div class="progress">
         <table>
-            <tr><th>Gold Set Size</th><th>Accuracy</th><th>Status</th></tr>
-            <tr><td>10 (manual)</td><td>~72%</td><td>Done — baseline</td></tr>
-            <tr><td>222 (auto-harvested)</td><td>~80%</td><td>Done — current production</td></tr>
-            <tr><td>500 (+ human review)</td><td>~85%</td><td>Next</td></tr>
-            <tr><td>2,000 (fine-tuning)</td><td>~92%</td><td>Future</td></tr>
+            <tr><th>Gold Set Size</th><th>Accuracy</th><th>How</th></tr>
+            <tr><td>10</td><td>~72%</td><td>Manual seed (I labeled 10 examples)</td></tr>
+            <tr class="active"><td><strong>222</strong></td><td><strong>~80%</strong></td><td><strong>Auto-harvested from high-confidence outputs</strong></td></tr>
+            <tr><td>500</td><td>~85%</td><td>+ human review (when PM bandwidth available)</td></tr>
+            <tr><td>2,000</td><td>~92%</td><td>Fine-tune custom model</td></tr>
         </table>
     </div>
+    <p>The key insight: you don't need humans to label everything. You need humans to label <em>a few</em>, then let high-confidence outputs teach the system the rest.</p>
 
-    <h2>Results</h2>
+    <h2><span class="emoji">📊</span> Result</h2>
     <div class="metrics">
         <div class="m"><div class="n">91%</div><div class="l">Category Detection</div></div>
         <div class="m"><div class="n">88%</div><div class="l">Avg Confidence</div></div>
         <div class="m"><div class="n">18K</div><div class="l">Records / Day</div></div>
         <div class="m"><div class="n">2%</div><div class="l">Skip Rate (was 15%)</div></div>
-        <div class="m"><div class="n">222</div><div class="l">Auto-Harvested Examples</div></div>
         <div class="m"><div class="n">0</div><div class="l">Manual Intervention</div></div>
+        <div class="m"><div class="n">222</div><div class="l">Self-Harvested Examples</div></div>
     </div>
 
-    <h2>What I'd Do Differently</h2>
+    <div class="callout summit">
+        <div class="label gold">Recognition</div>
+        <strong>Invited to present at the EU Leadership Summit in Luxembourg.</strong> The project was selected as a showcase example of AI applied to real business problems — demonstrating how unstructured customer feedback can be transformed into actionable product intelligence at scale.
+    </div>
+
+    <h2><span class="emoji">🧠</span> What I'd Do Differently</h2>
     <ul>
-        <li><strong>Start with the knowledge base, not the model.</strong> I spent 2 weeks tuning prompts before realizing the model simply didn't know what the programs were. The KB (35 curated entries) gave a bigger accuracy lift than any prompt engineering.</li>
-        <li><strong>Build the evaluation harness first.</strong> I couldn't measure improvements reliably until I built the A/B eval script. Should have done this day 1.</li>
-        <li><strong>Human-in-the-loop is a people problem, not a tech problem.</strong> The infrastructure for feedback is wired end-to-end (DynamoDB table, dashboard thumbs up/down). But no PM has bandwidth to review. The auto-harvest workaround sidesteps this for now.</li>
+        <li><strong>Start with the knowledge base, not the model.</strong> I spent 2 weeks tuning prompts before realizing the model simply didn't know what the programs were. The KB gave a bigger lift than any prompt trick.</li>
+        <li><strong>Build the eval harness on Day 1.</strong> I couldn't measure improvements reliably until Week 3. Should have been the first thing I built.</li>
+        <li><strong>Human-in-the-loop is a people problem, not a tech problem.</strong> The feedback infrastructure exists end-to-end (DynamoDB, dashboard thumbs up/down). But PMs don't have bandwidth to review. Auto-harvest sidesteps this for now.</li>
     </ul>
 
-    <h2>Tech Stack</h2>
-    <ul>
-        <li><strong>Compute:</strong> SageMaker Processing Jobs (ml.m5.xlarge), Lambda (Python 3.12)</li>
-        <li><strong>AI:</strong> Claude 3 Sonnet (Bedrock), Titan Embeddings v2 (1024-dim)</li>
-        <li><strong>Storage:</strong> S3 (parquet), DynamoDB (feedback loop)</li>
-        <li><strong>Orchestration:</strong> Event-driven (S3 PUT → Lambda → SageMaker)</li>
-        <li><strong>Monitoring:</strong> run_metrics.json (6 accuracy metrics tracked per run)</li>
-    </ul>
+    <h2><span class="emoji">🛠</span> Tech Stack</h2>
+    <div class="tech-stack">
+        <span>SageMaker</span>
+        <span>Lambda</span>
+        <span>Claude 3 (Bedrock)</span>
+        <span>Titan Embeddings</span>
+        <span>S3</span>
+        <span>DynamoDB</span>
+        <span>Python</span>
+        <span>Parquet</span>
+        <span>Event-driven</span>
+        <span>RAG</span>
+    </div>
 
-    <footer><a href="../../index.html">← Back to portfolio</a></footer>
+    <footer>
+        <a href="../../index.html">← Back to portfolio</a>
+        <a href="architecture-redesign.html">Next: Killing a Monolith →</a>
+    </footer>
 </div>
+
 </body>
 </html>
