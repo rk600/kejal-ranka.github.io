@@ -1,39 +1,38 @@
 # kejal-ranka.github.io
 
-Personal portfolio website — Senior Analytics & ML Engineer.
-
-## Deploy to GitHub Pages
-
-1. Create a repo named `kejal-ranka.github.io` on GitHub
-2. Push this code:
-   ```bash
-   git remote add origin https://github.com/kejal-ranka/kejal-ranka.github.io.git
-   git push -u origin main
-   ```
-3. Go to repo Settings → Pages → Source: Deploy from branch → `main` / `/ (root)`
-4. Site will be live at: https://kejal-ranka.github.io
+Personal portfolio — Senior Analytics & ML Engineer.
 
 ## Structure
 
 ```
-├── index.html                  ← Main portfolio page
+├── index.html                              ← Homepage (intro + case study links + skills)
 ├── assets/
-│   └── Kejal_Ranka_Resume.pdf  ← Downloadable resume (replace placeholder with actual PDF)
+│   └── Kejal_Ranka_Resume.pdf              ← Downloadable resume
 └── projects/
-    ├── nlp-pipeline.html       ← Voice of Customer NLP Platform
-    ├── ranking-engine.html     ← Entity Ranking & Recommendation Engine
-    ├── architecture.html       ← ETL Architecture Modernization
-    ├── bias-detection.html     ← Statistical Bias Discovery
-    └── sustainability.html     ← AI-Enhanced Emissions Analytics (VIZCON)
+    ├── professional/                        ← Work case studies (sanitized)
+    │   ├── nlp-pipeline.html               ← Self-Improving NLP Classification Pipeline
+    │   ├── architecture-redesign.html      ← Monolith → Modular ETL Redesign
+    │   └── bias-discovery.html             ← The $5M Bug Nobody Knew Existed
+    └── personal/                            ← Personal projects & competitions (add later)
+        └── (coming soon)
 ```
 
-## To Update
+## Deploy
 
-- Edit HTML files directly
-- Commit and push — GitHub Pages auto-deploys
+1. Create repo `kejal-ranka.github.io` on GitHub
+2. ```bash
+   cd ~/Documents/Personal/portfolio
+   git remote add origin https://github.com/kejal-ranka/kejal-ranka.github.io.git
+   git push -u origin main
+   ```
+3. Settings → Pages → Source: `main` branch
+4. Live at: https://kejal-ranka.github.io
 
-## Resume PDF
+## Adding Personal Projects Later
 
-Convert the .docx to PDF and replace `assets/Kejal_Ranka_Resume.pdf`:
-- Open `.docx` in Word → File → Export as PDF
-- Or: `libreoffice --headless --convert-to pdf Kejal_Ranka_Resume_Senior_BIE.docx`
+Drop new `.html` files in `projects/personal/` and add a card to the homepage.
+The "Coming soon" placeholder on the homepage will be replaced.
+
+## Resume
+
+Convert .docx to PDF and replace `assets/Kejal_Ranka_Resume.pdf`.
