@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kejal Ranka — Senior Analytics & ML Engineer</title>
+    <meta name="description" content="Senior Analytics & ML Engineer building production AI/ML pipelines and data systems at scale. 5+ years, $73M impact, 18K records/day NLP pipeline.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --accent: #4361ee;
+            --accent-light: #e8edff;
+            --text: #2d2d2d;
+            --text-light: #6b7280;
+            --bg: #fafbfc;
+            --card-bg: #ffffff;
+            --border: #e5e7eb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* Nav */
+        nav {
+            position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+            z-index: 100; padding: 16px 0;
+        }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { font-weight: 700; font-size: 18px; color: var(--primary); }
+        nav .links a { margin-left: 32px; text-decoration: none; color: var(--text-light); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        nav .links a:hover { color: var(--accent); }
+
+        /* Hero */
+        .hero {
+            padding: 140px 0 80px; text-align: center;
+        }
+        .hero h1 { font-size: 48px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
+        .hero .subtitle { font-size: 20px; color: var(--text-light); margin-bottom: 24px; font-weight: 400; }
+        .hero .tagline { font-size: 16px; color: var(--text); max-width: 700px; margin: 0 auto 32px; }
+        .hero .cta { display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .hero .cta a {
+            padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 14px; transition: all 0.2s;
+        }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: #3451d4; transform: translateY(-1px); }
+        .btn-secondary { border: 1px solid var(--border); color: var(--text); background: white; }
+        .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Stats */
+        .stats {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+            padding: 48px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+            margin-bottom: 80px;
+        }
+        .stat { text-align: center; }
+        .stat .number { font-size: 32px; font-weight: 700; color: var(--accent); }
+        .stat .label { font-size: 13px; color: var(--text-light); margin-top: 4px; }
+
+        /* Section */
+        section { padding: 80px 0; }
+        section h2 { font-size: 32px; font-weight: 700; color: var(--primary); margin-bottom: 16px; }
+        section .section-subtitle { font-size: 16px; color: var(--text-light); margin-bottom: 48px; max-width: 600px; }
+
+        /* Project Cards */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        .project-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+            padding: 32px; transition: all 0.2s; cursor: pointer; text-decoration: none; color: inherit; display: block;
+        }
+        .project-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(67,97,238,0.08); }
+        .project-card .tag { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; margin-bottom: 12px; text-transform: uppercase; }
+        .project-card h3 { font-size: 18px; margin-bottom: 8px; color: var(--primary); }
+        .project-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+        .project-card .impact { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; font-weight: 600; color: var(--accent); }
+
+        /* Skills */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+        .skill-group h3 { font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-tags span { background: var(--accent-light); color: var(--text); font-size: 13px; padding: 6px 12px; border-radius: 6px; }
+
+        /* Contact */
+        .contact { text-align: center; background: var(--primary); color: white; border-radius: 16px; padding: 64px 32px; margin-bottom: 80px; }
+        .contact h2 { color: white; }
+        .contact p { color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+        .contact .links-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .contact .links-row a { color: white; text-decoration: none; padding: 10px 20px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 14px; transition: all 0.2s; }
+        .contact .links-row a:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+        /* Footer */
+        footer { text-align: center; padding: 32px 0; color: var(--text-light); font-size: 13px; border-top: 1px solid var(--border); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            nav .links a { margin-left: 16px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="container">
+        <div class="logo">KR</div>
+        <div class="links">
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+            <a href="assets/Kejal_Ranka_Resume.pdf" target="_blank">Resume</a>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="container">
+        <h1>Kejal Ranka</h1>
+        <p class="subtitle">Senior Analytics & ML Engineer</p>
+        <p class="tagline">I build production AI/ML pipelines and analytics systems that drive multi-million dollar decisions. Currently at Amazon, designing data products that serve 800+ users across EU marketplace operations.</p>
+        <div class="cta">
+            <a href="#projects" class="btn-primary">View Projects</a>
+            <a href="assets/Kejal_Ranka_Resume.pdf" class="btn-secondary" target="_blank">Download Resume</a>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="stats">
+        <div class="stat"><div class="number">$73M</div><div class="label">Cost Optimization Delivered</div></div>
+        <div class="stat"><div class="number">18K/day</div><div class="label">Records Classified by NLP Pipeline</div></div>
+        <div class="stat"><div class="number">91%</div><div class="label">ML Classification Accuracy</div></div>
+        <div class="stat"><div class="number">800+</div><div class="label">Monthly Platform Users</div></div>
+    </div>
+</div>
+
+<section id="projects">
+    <div class="container">
+        <h2>Selected Projects</h2>
+        <p class="section-subtitle">Production systems I've designed and shipped — from NLP pipelines to ranking engines to architecture redesigns.</p>
+
+        <div class="projects-grid">
+            <a href="projects/nlp-pipeline.html" class="project-card">
+                <span class="tag">AI / ML</span>
+                <h3>Voice of Customer NLP Platform</h3>
+                <p>Production pipeline classifying 18K+ unstructured records daily using LLM + RAG + few-shot learning. Event-driven architecture with self-improving accuracy.</p>
+                <div class="impact">91% accuracy • 18K records/day • Self-improving system</div>
+            </a>
+
+            <a href="projects/ranking-engine.html" class="project-card">
+                <span class="tag">Data Products</span>
+                <h3>Entity Ranking & Recommendation Engine</h3>
+                <p>Composite scoring system ranking 10K+ entities across weighted dimensions. Powers $15M in operational targeting decisions as a real-time recommendation system.</p>
+                <div class="impact">$15M decisions influenced • 10K+ entities scored</div>
+            </a>
+
+            <a href="projects/architecture.html" class="project-card">
+                <span class="tag">Engineering</span>
+                <h3>ETL Architecture Modernization</h3>
+                <p>Redesigned monolithic data pipelines into modular framework. Reduced feature onboarding from months to weeks, eliminated code duplication across 14+ jobs.</p>
+                <div class="impact">Months → Weeks onboarding • 14+ pipelines modularized</div>
+            </a>
+
+            <a href="projects/bias-detection.html" class="project-card">
+                <span class="tag">Analytics</span>
+                <h3>Statistical Bias Discovery & Resolution</h3>
+                <p>Discovered systematic measurement bias where lead-time assumptions skewed performance metrics. Redesigned calculation logic, unblocking $5M+ in stalled decisions.</p>
+                <div class="impact">$5M+ unblocked • Systematic bias eliminated</div>
+            </a>
+
+            <a href="projects/sustainability.html" class="project-card">
+                <span class="tag">Sustainability</span>
+                <h3>AI-Enhanced Emissions Analytics</h3>
+                <p>Modeled CO₂ emissions in last-mile logistics with AI voice narration. EV transition simulation projecting 58-60% emission reduction. VIZCON 2025 finalist.</p>
+                <div class="impact">3rd Place EMEA • 58-60% emission reduction projected</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="container">
+        <h2>Technical Skills</h2>
+        <p class="section-subtitle">Full-stack analytics and ML — from raw data to production AI systems.</p>
+
+        <div class="skills-grid">
+            <div class="skill-group">
+                <h3>Languages & Data</h3>
+                <div class="skill-tags">
+                    <span>SQL (Advanced)</span>
+                    <span>Python</span>
+                    <span>pandas</span>
+                    <span>NumPy</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3>AI / ML</h3>
+                <div class="skill-tags">
+                    <span>LLM Integration</span>
+                    <span>RAG Pipelines</span>
+                    <span>Vector Embeddings</span>
+                    <span>Few-Shot Learning</span>
+                    <span>Sentiment Analysis</span>
+                    <span>HDBSCAN</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3>Cloud & Infrastructure</h3>
+                <div class="skill-tags">
+                    <span>AWS Redshift</span>
+                    <span>S3</span>
+                    <span>Lambda</span>
+                    <span>SageMaker</span>
+                    <span>Bedrock</span>
+                    <span>Glue</span>
+                    <span>DynamoDB</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3>Visualization & Tools</h3>
+                <div class="skill-tags">
+                    <span>Tableau</span>
+                    <span>QuickSight</span>
+                    <span>HTML Dashboards</span>
+                    <span>Git</span>
+                    <span>CI/CD</span>
+                    <span>Agile</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="contact">
+            <h2>Let's Connect</h2>
+            <p>Open to Senior BIE / Analytics Engineer / ML Engineer roles in Mumbai.</p>
+            <div class="links-row">
+                <a href="mailto:rankakejal.600@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/kejal-ranka" target="_blank">LinkedIn</a>
+                <a href="assets/Kejal_Ranka_Resume.pdf" target="_blank">Resume (PDF)</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2026 Kejal Ranka. Built with purpose.</p>
+    </div>
+</footer>
+
+</body>
+</html>
