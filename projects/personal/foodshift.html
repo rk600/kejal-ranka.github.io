@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodShift — Kejal Ranka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #0f172a; --accent: #b8860b; --accent-glow: rgba(184,134,11,0.1); --text: #1e293b; --text-muted: #64748b; --bg: #fafafa; --surface: #ffffff; --border: #e2e8f0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+
+        .project-hero {
+            background: linear-gradient(135deg, #1a1207 0%, #2d2006 50%, #1a1207 100%);
+            padding: 100px 24px 60px; text-align: center;
+        }
+        .project-hero .tag { display: inline-block; background: rgba(184,134,11,0.2); color: #d4a843; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .project-hero h1 { font-size: 36px; font-weight: 800; color: white; max-width: 600px; margin: 0 auto 12px; line-height: 1.2; }
+        .project-hero .subtitle { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 520px; margin: 0 auto 24px; }
+        .project-hero .cta { display: inline-block; background: #b8860b; color: white; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s; }
+        .project-hero .cta:hover { background: #9a7209; transform: translateY(-2px); }
+
+        .page { max-width: 700px; margin: 0 auto; padding: 48px 24px 80px; }
+        nav { margin-bottom: 32px; }
+        nav a { font-size: 14px; color: var(--text-muted); text-decoration: none; }
+        nav a:hover { color: var(--accent); }
+        h2 { font-size: 22px; font-weight: 700; color: var(--primary); margin: 48px 0 12px; }
+        h3 { font-size: 16px; font-weight: 600; color: var(--primary); margin: 28px 0 8px; }
+        p { font-size: 15px; margin-bottom: 16px; }
+        ul { margin: 8px 0 16px 20px; font-size: 15px; }
+        li { margin-bottom: 8px; }
+        strong { color: var(--primary); }
+        .callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0; font-size: 14px; line-height: 1.7; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+        .metrics .m { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; text-align: center; }
+        .metrics .m .n { font-size: 22px; font-weight: 800; color: var(--accent); }
+        .metrics .m .l { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+        .tech-stack span { background: var(--surface); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; }
+        footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+        footer a { font-size: 14px; color: var(--text-muted); text-decoration: none; }
+        footer a:hover { color: var(--accent); }
+        @media (max-width: 600px) { .project-hero h1 { font-size: 28px; } .metrics { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="project-hero">
+    <div class="tag">Data Visualization · ML · VIZCON 2026</div>
+    <h1>FoodShift — The Plate That Changed</h1>
+    <p class="subtitle">63 years of food evolution across 197 countries. How economics pushes plates to change — and how culture resists.</p>
+    <a href="https://rk600.github.io/foodshift/" target="_blank" class="cta">→ Explore the Live Dashboard</a>
+</div>
+
+<div class="page">
+    <nav><a href="../../index.html">← Back to portfolio</a></nav>
+
+    <h2>The Challenge</h2>
+    <p>VIZCON 2026 theme: "How the world lives, thrives, and connects." I wanted to explore the most fundamental human activity — food — and ask: why do countries eat what they eat? Is it economics? Culture? Geography? And can we predict what they'll eat next?</p>
+
+    <h2>What I Built</h2>
+    <p>An interactive cinematic data visualization that takes viewers through 5 acts of discovery, backed by ML models and 63 years of FAO data.</p>
+
+    <div class="metrics">
+        <div class="m"><div class="n">197</div><div class="l">Countries Analyzed</div></div>
+        <div class="m"><div class="n">63</div><div class="l">Years (1961–2023)</div></div>
+        <div class="m"><div class="n">102K</div><div class="l">Data Points</div></div>
+        <div class="m"><div class="n">34%</div><div class="l">GDP Explains</div></div>
+        <div class="m"><div class="n">66%</div><div class="l">Culture Explains</div></div>
+        <div class="m"><div class="n">1 weekend</div><div class="l">Built in</div></div>
+    </div>
+
+    <h2>Key Discoveries</h2>
+    <ul>
+        <li><strong>China's plate shifted 81 percentage points</strong> in 63 years — the fastest major transformation in history. Switzerland moved 11.</li>
+        <li><strong>GDP explains only 34% of meat consumption.</strong> The S-curve model (logistic fit) predicts most countries — but India breaks it (eats 1.6% vs predicted 7.5%).</li>
+        <li><strong>Spice is the only food group diverging globally.</strong> Everything else converges — plates are becoming more similar worldwide. But spice usage stays fiercely local.</li>
+        <li><strong>The 2010s accelerated dietary change by 45%</strong> compared to every previous decade.</li>
+        <li><strong>Every country has a "breakpoint year"</strong> — the moment its plate transformed fastest. China: 1984. Korea: 1976. India: 2009.</li>
+    </ul>
+
+    <h2>The Analytical Approach</h2>
+
+    <h3>Data Pipeline</h3>
+    <p>Merged FAO Historic (1961-2013) + Modern (2010-2023) datasets. Mapped 120 food items into 10 canonical groups. Calculated GDP per capita from World Bank total GDP ÷ FAO population. 6 reproducible Python scripts.</p>
+
+    <h3>ML & Statistical Models</h3>
+    <ul>
+        <li><strong>K-Means Clustering:</strong> 30 features per country → 4 food archetypes (Rapid Carnivores, Grain Guardians, Dairy Heritage, Root Shifters)</li>
+        <li><strong>Logistic S-Curve:</strong> Meat % vs log(GDP/capita). R²=0.34 — the LOW fit IS the insight.</li>
+        <li><strong>Culture Score:</strong> Residual from S-curve = cultural resistance. Mongolia +14.8, India -4.5.</li>
+        <li><strong>Linear Forecasting:</strong> Per country × per food group trend extrapolation to 2035 with 95% CI.</li>
+        <li><strong>Breakpoint Detection:</strong> Sliding 10-year window identifying year of maximum transformation.</li>
+    </ul>
+
+    <h3>GenAI Usage</h3>
+    <p>AI (Claude via Kiro CLI) was used throughout: data pipeline code generation, ML model design, insight discovery, narrative writing, and all visualization code. Estimated 70% time reduction. Full project built in one weekend sprint.</p>
+
+    <div class="callout">
+        <strong>The closing insight:</strong> "34% of what you eat is determined by your income. 66% is determined by who you are. The plate doesn't show what you eat — it shows who you are."
+    </div>
+
+    <h2>Visualization Features</h2>
+    <ul>
+        <li><strong>Animated bar chart race</strong> — food groups competing over 63 years, auto-playing with food emojis</li>
+        <li><strong>Heartbeat timeline</strong> — rate of change per year with breakpoint marker</li>
+        <li><strong>S-curve scatter</strong> — 159 countries colored by cultural resistance (red/blue)</li>
+        <li><strong>World choropleth map</strong> — cultural resistance visualized geographically</li>
+        <li><strong>Convergence lines</strong> — spice highlighted as the only diverging group</li>
+        <li><strong>Gravity pull animation</strong> — countries drifting between food tribes across decades</li>
+        <li><strong>SVG plate illustrations</strong> — custom dinner plates with fork/knife showing food composition</li>
+        <li><strong>Forecast chart</strong> — 2024-2035 predictions with confidence intervals</li>
+    </ul>
+
+    <h2>Tech Stack</h2>
+    <div class="tech-stack">
+        <span>Python</span>
+        <span>pandas</span>
+        <span>scikit-learn</span>
+        <span>scipy</span>
+        <span>Plotly.js</span>
+        <span>HTML/CSS/JS</span>
+        <span>SVG</span>
+        <span>GitHub Pages</span>
+    </div>
+
+    <div style="text-align:center;margin:40px 0">
+        <a href="https://rk600.github.io/foodshift/" target="_blank" class="project-hero" style="display:inline-block;background:#b8860b;color:white;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px">→ Explore the Live Dashboard</a>
+    </div>
+
+    <footer>
+        <a href="../../index.html">← Back to portfolio</a>
+    </footer>
+</div>
+
+</body>
+</html>
