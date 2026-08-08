@@ -72,9 +72,9 @@
     <nav><a href="../../index.html">← Back to portfolio</a></nav>
 
     <h2><span class="emoji">🎯</span> Situation</h2>
-    <p>I inherited 14+ ETL pipelines built over 2 years by 3 different engineers. They all worked. They all ran on schedule. They all produced numbers that appeared in executive dashboards every Monday.</p>
+    <p>I inherited 14+ ETL pipelines built over time by multiple engineers. They all worked. They all ran on schedule. They all produced numbers that appeared in executive dashboards every Monday.</p>
     <p>So what was the problem?</p>
-    <p>The same business logic — entity selection, savings calculation, metric computation — was <strong>copy-pasted across all of them</strong>. The savings formula existed in 4 different versions. The entity attributes query was duplicated 3 times with subtle differences. Nobody knew which version was "correct."</p>
+    <p>The same business logic — entity selection, savings calculation, metric computation — was <strong>copy-pasted across all of them</strong>. The savings formula existed in multiple versions. The entity attributes query was duplicated across pipelines with subtle differences. Nobody knew which version was "correct."</p>
 
     <div class="callout">
         <strong>The real cost wasn't technical debt.</strong> It was unanswerable questions. "What channel drives our savings — email or phone?" Impossible to tell. "How do domestic vs international entities differ?" Can't say. The architecture wasn't built for granularity — it was built for "get a number out by Monday."
@@ -117,19 +117,19 @@ Consumers just read from modules:
     <h3>The Migration (Zero Downtime)</h3>
     <div class="timeline">
         <div class="week">
-            <div class="time">Week 1-2</div>
+            <div class="time">Phase 1</div>
             <div class="what">Built new modular pipelines <strong>alongside</strong> the old ones. Both running in parallel. Leadership sees no change.</div>
         </div>
         <div class="week">
-            <div class="time">Week 3</div>
+            <div class="time">Phase 2</div>
             <div class="what">Row-by-row output comparison: old vs new. <strong>Found 3 discrepancies</strong> — all bugs in the OLD code that nobody had noticed.</div>
         </div>
         <div class="week">
-            <div class="time">Week 4</div>
+            <div class="time">Phase 3</div>
             <div class="what">Switched consumers to new modules. Old pipelines still running (safety net) but outputs disabled.</div>
         </div>
         <div class="week">
-            <div class="time">Week 5</div>
+            <div class="time">Phase 4</div>
             <div class="what">Decommissioned old pipelines. Clean cutover after 1 week of verified parallel run.</div>
         </div>
     </div>
@@ -165,7 +165,7 @@ Consumers just read from modules:
     <h2><span class="emoji">🧠</span> What I Learned</h2>
     <ul>
         <li><strong>Sell the outcome, not the refactor.</strong> "I want to modularize our pipelines" gets a polite no. "I can tell you whether email or phone drives more savings — but only if we restructure" gets a yes.</li>
-        <li><strong>Parallel runs buy credibility.</strong> Those 2 weeks of comparison caught bugs that would have been blamed on "the migration broke something."</li>
+        <li><strong>Parallel runs buy credibility.</strong> The parallel comparison caught bugs that would have been blamed on "the migration broke something."</li>
         <li><strong>Perfect parity with broken code isn't a virtue.</strong> When comparison showed discrepancies, my instinct was to match the old output exactly. Investigating revealed the old code was wrong. Don't replicate bugs.</li>
         <li><strong>Modules need contracts.</strong> Without explicit input/output schemas, downstream consumers break silently. The hour spent defining interfaces saved weeks.</li>
     </ul>

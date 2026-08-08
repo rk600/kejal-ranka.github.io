@@ -75,7 +75,7 @@
 
     <h2><span class="emoji">🎯</span> Situation</h2>
     <p>Account managers across a major e-commerce marketplace record 18,000+ customer anecdotes per year across two programs. Each entry contains critical business signal: what programs customers care about, what blocks their growth, whether sentiment is improving.</p>
-    <p>But it's all free text. Messy. Inconsistent. No one reads 18,000 entries. Product managers were making strategy decisions based on gut feel and the 50 most recent entries they happened to skim.</p>
+    <p>But it's all free text. Messy. Inconsistent. No one reads 18,000 entries. Product managers had no systematic way to extract insights — they relied on manually skimming recent entries.</p>
     <p><strong>The question leadership asked:</strong> "What do our customers actually think about our programs — and how is that changing over time?"</p>
     <p>Nobody could answer it. Not with data.</p>
 
@@ -90,7 +90,7 @@
 
     <div class="callout">
         <div class="label">The constraint that made it hard</div>
-        <strong>Zero labeled training data existed.</strong> No taxonomy had been defined. 38 different tag variants mapped to 15 canonical categories — with no documentation. And the accuracy bar was high: one week of obviously wrong classifications = PMs lose trust = system dies.
+        <strong>Zero labeled training data existed.</strong> No taxonomy had been defined. 38 different tag variants mapped to 15 canonical categories — with no documentation. And the accuracy bar was high: inaccurate classifications would erode stakeholder trust quickly.
     </div>
 
     <h2><span class="emoji">🔧</span> Action</h2>
@@ -166,8 +166,8 @@
 
     <h2><span class="emoji">🧠</span> What I'd Do Differently</h2>
     <ul>
-        <li><strong>Start with the knowledge base, not the model.</strong> I spent 2 weeks tuning prompts before realizing the model simply didn't know what the programs were. The KB gave a bigger lift than any prompt trick.</li>
-        <li><strong>Build the eval harness on Day 1.</strong> I couldn't measure improvements reliably until Week 3. Should have been the first thing I built.</li>
+        <li><strong>Start with the knowledge base, not the model.</strong> I spent time tuning prompts before realizing the model simply didn't know what the programs were. The KB gave a bigger lift than any prompt trick.</li>
+        <li><strong>Build the eval harness on Day 1.</strong> I couldn't measure improvements reliably until I built a proper eval harness. Should have been the first thing I built.</li>
         <li><strong>Human-in-the-loop is a people problem, not a tech problem.</strong> The feedback infrastructure exists end-to-end (DynamoDB, dashboard thumbs up/down). But PMs don't have bandwidth to review. Auto-harvest sidesteps this for now.</li>
     </ul>
 
